@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.Controller">
+   <top>
+      <BorderPane fx:id="topBar" prefHeight="25.0" style="-fx-background-color: #5e5e5e;" BorderPane.alignment="CENTER">
+         <right>
+            <GridPane prefHeight="25.0" prefWidth="75.0" BorderPane.alignment="CENTER">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+                <ColumnConstraints hgrow="SOMETIMES" />
+                <ColumnConstraints hgrow="SOMETIMES" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="25.0" prefHeight="25.0" vgrow="NEVER" />
+              </rowConstraints>
+               <children>
+                  <ImageView fx:id="leftBTN" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@imgs/Underscore.png" />
+                     </image></ImageView>
+                  <ImageView fx:id="middleBTN" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                     <image>
+                        <Image url="@imgs/square.png" />
+                     </image></ImageView>
+                  <ImageView fx:id="rightBTN" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+                     <image>
+                        <Image url="@imgs/cross.png" />
+                     </image></ImageView>
+               </children>
+            </GridPane>
+         </right>
+      </BorderPane>
+   </top>
+   <bottom>
+      <Pane fx:id="bottomPane" prefHeight="5" style="-fx-background-color:#c2c2c2" BorderPane.alignment="CENTER" />
+   </bottom>
+   <right>
+      <Pane fx:id="rightPane" prefWidth="5" style="-fx-background-color:#c2c2c2" BorderPane.alignment="CENTER" />
+   </right>
+   <left>
+      <Pane fx:id="leftPane" prefWidth="5" style="-fx-background-color:#c2c2c2" BorderPane.alignment="CENTER" />
+   </left>
+   <center>
+      <AnchorPane fx:id="centerPane" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>

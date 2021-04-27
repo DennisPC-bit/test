@@ -1,12 +1,9 @@
 package com.company;
 
-import javafx.beans.property.DoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -22,7 +19,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class Controller implements Initializable {
+public class ViewController implements Initializable {
     public AnchorPane centerPane;
     @FXML
     private BorderPane root;
@@ -41,13 +38,6 @@ public class Controller implements Initializable {
     @FXML
     private ImageView rightBTN;
     private boolean maximized = false;
-    private static Controller controller;
-
-    public static Controller getInstance(){
-        if(controller==null)
-            controller = new Controller();
-        return controller;
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -58,26 +48,27 @@ public class Controller implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("PickerStage.fxml"));
         try {
             root.setCenter(loader.load());
+            PickerStageController p = loader.getController();
+            p.setViewController(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void split(Orientation orientation){
-        FXMLLoader loader = new FXMLLoader(Controller.class.getResource("PickerStage.fxml"));
+    public void split(Orientation orientation, PickerStageController pickerStageController) {
         try {
             SplitPane splitPane = new SplitPane();
             splitPane.setOrientation(orientation);
-            splitPane.getItems().add(root.getCenter());
+            for(int i = 0 ; i < 2 ; i++){
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("PickerStage.fxml"));
             splitPane.getItems().add(loader.load());
-            root.setCenter(splitPane);
+            PickerStageController p = loader.getController();
+            p.setViewController(this);
+            }
+            pickerStageController.makeSplitPane(splitPane);
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public DoubleProperty getCenterWidthPoperty(){
-        return null;
     }
 
 
@@ -108,24 +99,24 @@ public class Controller implements Initializable {
         AtomicReference<Double> x = new AtomicReference<>((double) 0);
         AtomicReference<Double> y = new AtomicReference<>((double) 0);
         List<Pane> panes = new ArrayList<>(Arrays.asList(bottomPane, leftPane, rightPane));
-        root.setOnMouseMoved((MouseEvent mouseEvent)->{
+        root.setOnMouseMoved((MouseEvent mouseEvent) -> {
             x.set(mouseEvent.getSceneX());
             y.set(mouseEvent.getSceneY());
         });
         bottomPane.setOnMouseReleased(mouseEvent ->
         {
-            if(Main.getStage().getHeight()<mouseEvent.getSceneY() - y.get()){
-                Main.getStage().setHeight(Main.getStage().getHeight()-(mouseEvent.getSceneY() - y.get()));
-            } else if(Main.getStage().getHeight()>mouseEvent.getSceneY() - y.get()){
-            Main.getStage().setHeight(Main.getStage().getHeight()+(mouseEvent.getSceneY() - y.get()));
-        }
+            if (Main.getStage().getHeight() < mouseEvent.getSceneY() - y.get()) {
+                Main.getStage().setHeight(Main.getStage().getHeight() - (mouseEvent.getSceneY() - y.get()));
+            } else if (Main.getStage().getHeight() > mouseEvent.getSceneY() - y.get()) {
+                Main.getStage().setHeight(Main.getStage().getHeight() + (mouseEvent.getSceneY() - y.get()));
+            }
         });
 
         rightPane.setOnMouseReleased(mouseEvent -> {
-            if(Main.getStage().getWidth()<mouseEvent.getSceneX() - x.get()){
-                Main.getStage().setWidth(Main.getStage().getWidth()-(mouseEvent.getSceneX() - x.get()));
-            } else if(Main.getStage().getWidth()>mouseEvent.getSceneX() - x.get()){
-                Main.getStage().setWidth(Main.getStage().getWidth()+(mouseEvent.getSceneX() - x.get()));
+            if (Main.getStage().getWidth() < mouseEvent.getSceneX() - x.get()) {
+                Main.getStage().setWidth(Main.getStage().getWidth() - (mouseEvent.getSceneX() - x.get()));
+            } else if (Main.getStage().getWidth() > mouseEvent.getSceneX() - x.get()) {
+                Main.getStage().setWidth(Main.getStage().getWidth() + (mouseEvent.getSceneX() - x.get()));
             }
         });
 
